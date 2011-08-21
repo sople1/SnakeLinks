@@ -12,10 +12,10 @@ if (!__SLK__) exit();
 //$cfg is an object.
 //db connect setting.
 $cfg->db = array(
-            "host" => "localhost",
-            "user" => "web_flr",
-            "pwd" => "DNvsPqyy6MjYY9O",
-            "dbname" => "web_flr",
-            "charset" => "utf8"
+            "host" => "<host>",
+            "user" => "<user>",
+            "pwd" => "<pwd>",
+            "dbname" => "<dbname>",
+            "charset" => "<charset>"
       );
 ?>
