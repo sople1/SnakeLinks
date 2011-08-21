@@ -35,8 +35,8 @@ class adminModel extends admin
         if ($args) $output = &$args;
         
         $output->data = array(
-                    "app_title" => $cfg->default["app_title"],
-                    "module_list" => $this->getModuleList() 
+                    "/#app_title/" => $cfg->default["app_title"],
+                    "/#module_list/" => $this->getModuleList() 
                         );
         return $output;
     }

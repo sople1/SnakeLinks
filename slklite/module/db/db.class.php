@@ -11,7 +11,7 @@
  
 class db
 {
-    var $conn; #dbconn resource
+    var $conn;
     /**
      *
      * @brief init module.
@@ -33,14 +33,13 @@ class db
     function connect($args=null)
     {
         global $cfg;
-        //var_export($cfg->db);
         $this->conn = mysql_connect($cfg->db['host'],$cfg->db['user'], $cfg->db['pwd']);
         if ($this->conn)
         {
             $rtn = mysql_select_db($cfg->db['dbname'], $this->conn);
             if (!$rtn)
             {
-                mysql_set_charset($cfg->db['charset'], $this->conn);
+                mysql_set_charset($cfg->db['charset'],$this->conn);
                 $result->error = mysql_error();
                 $result->errno = mysql_errno();
             }
@@ -69,17 +68,15 @@ class db
     function query($sql, $conn=null)
     {
         if(!$conn) $conn = $this->conn;
-        $rtn = mysql_query($sql, $conn);
+        $rtn = mysql_query($query,$conn);
         if ($rtn)
         {
-            $result->query = $sql;
-            $result->resource = &$rtn;
+            $result->resource = $rtn;
             $result->error = "successed";
-            $result->errno = mysql_errno();
+            $result->errno = 0;
         }
         else
         {
-            $result->query = $sql;
             $result->error = mysql_error();
             $result->errno = mysql_errno();
         }

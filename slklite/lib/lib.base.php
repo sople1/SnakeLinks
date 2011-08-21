@@ -16,14 +16,11 @@ if (!__SLK__) exit();
  * @return object.
  *
  **/
-function loadModule($module_name, $module_type="class")
+function loadModule($module_name, $module_type)
 {
     global $SLK;
     $module_type = us2cc($module_type);
     include_once($SLK[module]."/".$module_name."/".$module_name.".".$module_type.".php");
-    if ($module_type=="class") {
-        $module_type = "";
-    }
     $module_key = us2cc($module_name."_".$module_type);
     $module = new $module_key;
     
@@ -37,17 +34,17 @@ function loadModule($module_name, $module_type="class")
  * @return string.
  *
  **/
-function loadReq($key=null, $type="request")
+function loadReq($key=null, $type=request)
 {
     eval("\$typename = &\$_".strtoupper($type).";");
     
-    global $req;
     if ($key)
     {
-        $req[$key] =  $typename[$key];
+        return $typename[$key];
     }
     else
     {
+        global $req;
         foreach($typename as $k => $v) {
             $req[$k] = $v;
         }
@@ -65,13 +62,10 @@ function loadReq($key=null, $type="request")
  **/
 function parseReq(&$req)
 {
-    global $SLK, $cfg, $API;
+    global $SLK, $cfg;
 
     if ($req[p]) {
         $SLK[mode]="proc";
-    }
-    else if ($API) {
-        $SLK[mode]="api";
     }
     else {
         $SLK[mode]="view";
@@ -99,7 +93,6 @@ function callPage()
     
     loadReq();
     parseReq($req);
-
     if ($SLK[mode]=="view"){
         printPage();
     }
@@ -123,27 +116,4 @@ function us2cc($str,$start=1)
     
     return $return;
 }
-
-
-/**
- *
- * @brief make array for replace.
- * @param array $array.
- * @return array, array.
- *
- **/
-function makeReplaceArray($array) 
-{
-    #리턴 형식에서 필드 정리.
-    $i = 0;
-    //var_export($array);
-    foreach($array as $k=>$v) {
-        $arr_key[$i] = "/#--".$k."--#/";
-        $arr_val[$i] = $v;
-        $i++;
-    }
-    
-    return array($arr_key, $arr_val);
-}
-
 ?>

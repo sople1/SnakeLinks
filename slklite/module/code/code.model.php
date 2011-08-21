@@ -33,7 +33,7 @@ class codeModel extends code
         $source = "";
         switch ($strength) {
             case 4:
-                $source .= "!@#$%^&*_-=+~";
+                $source .= "!@#$%^&*())_-=+~`";
             case 3:
                 $source .= "1234567890";
             case 2:
@@ -46,7 +46,6 @@ class codeModel extends code
         for ($i = 0; $i < $length; $i++) {
             $seed = $this->getSeed();
             mt_srand($seed);
-            str_shuffle($source);
             $output .= $source[(mt_rand() % strlen($source))];
         }
         return $output;

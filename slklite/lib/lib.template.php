@@ -20,16 +20,12 @@ function loadTpl($page, $module, $args=null)
 {
     global $SLK;
     
-    #파일 가져오기
     $res = file($SLK[module]."/".$module."/tpl/".$page.".html", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    #리턴 형식에서 필드 정리.
-    list($arr_key, $arr_val) = makeReplaceArray($args->data);
-    #리턴 형식에 값 대입
     foreach($res as $v) {
         if ($args->data) {
-            $v = preg_replace($arr_key, $arr_val, $v);
+            $v = preg_replace(array_keys($args->data), array_values($args->data), $v);
         }
-        $tpl .= $v."\n";
+        $tpl .= $v;
     }
     return $tpl;
 }
@@ -37,22 +33,14 @@ function loadTpl($page, $module, $args=null)
 /**
  *
  * @brief load skin file.
- * @param string $page, string $module, object $args.
+ * @param string $page, string $module.
  * @return string.
  *
  **/
-function loadSkin($page, $module, $args=null)
+function loadSkin($page, $module)
 {
-    #파일 가져오기
-    $res = file($SLK[module]."/".$module."/skin/".$page.".html", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    #리턴 형식에서 필드 정리.
-    list($arr_key, $arr_val) = makeReplaceArray($args->data);
-    #리턴 형식에 값 대입
-    foreach($res as $v) {
-        if ($args->data) {
-            $v = preg_replace($arr_key, $arr_val, $v);
-        }
-    } 
+    $tpl = file($SLK[module]."/".$module."/skin/".$page.".html", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    
     return $tpl;
 }
 
@@ -76,7 +64,7 @@ function makepage($module, $viewpage, $args)
     else {
         $oModule = &loadModule($cfg->default["module"], "view");
         $viewpage = $cfg->default["viewPage"];
-    }
+    }   
     $page = $oModule->$viewpage();
     
     return $page;

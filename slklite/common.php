@@ -7,7 +7,7 @@
  **/
 if (!__SLK__) exit();
 
-$currentLocation = $_SERVER[DOCUMENT_ROOT]."snakelinks";
+$currentLocation = $_SERVER[DOCUMENT_ROOT]."slklite";
 
 //set default value
 $SLK = array(
